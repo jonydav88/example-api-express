@@ -35,7 +35,7 @@ export async function postArticle(req: Request, res: Response) {
     const { title, body, author } = req.body;
     const newArticle: IArticle = new Article({ title, body, author });
     await createArticle(newArticle);
-    res.json(newArticle);
+    res.status(201).json(newArticle);
   } catch (error) {
     res.status(500).json({ status: 500, message: "error.message" });
   }
