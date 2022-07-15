@@ -7,13 +7,25 @@ import {
   createComment,
   updateComment,
   deleteComment,
+  getCommentsByArticleId,
 } from "../services/commentService";
 
 export async function getAll(req: Request, res: Response) {
   try {
-    const Comments = await getComments();
-    console.log(Comments);
-    res.json(Comments);
+    const comments = await getComments();
+    console.log(comments);
+    res.json(comments);
+  } catch (error) {
+    res.status(500).json({ status: 500, message: "error.message" });
+  }
+}
+
+export async function getAllByArticleId(req: Request, res: Response) {
+  try {
+    const { articleId } = req.params;
+    const comments = await getCommentsByArticleId(articleId);
+    console.log(comments);
+    res.json(comments);
   } catch (error) {
     res.status(500).json({ status: 500, message: "error.message" });
   }
@@ -22,9 +34,9 @@ export async function getAll(req: Request, res: Response) {
 export async function getById(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const Comment = await getCommentById(id);
-    console.log(Comment);
-    res.json(Comment);
+    const comment = await getCommentById(id);
+    console.log(comment);
+    res.json(comment);
   } catch (error) {
     res.status(500).json({ status: 500, message: "error.message" });
   }
@@ -32,8 +44,12 @@ export async function getById(req: Request, res: Response) {
 
 export async function postComment(req: Request, res: Response) {
   try {
-    const { title, body, author } = req.body;
-    const newComment: IComment = new Comment({ title, body, author });
+    const { body, author, articleId } = req.body;
+    const newComment: IComment = new Comment({
+      body,
+      author,
+      articleId,
+    });
     await createComment(newComment);
     res.status(201).json(newComment);
   } catch (error) {

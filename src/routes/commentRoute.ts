@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getAll,
   getById,
+  getAllByArticleId,
   postComment,
   putComment,
   removeComment,
@@ -16,6 +17,7 @@ class Comment {
 
   routes() {
     this.router.get("/", getAll);
+    this.router.get("/article=:articleId", getAllByArticleId);
     this.router.get("/:id", getById);
     this.router.post("/", postComment);
     this.router.put("/:id", putComment);

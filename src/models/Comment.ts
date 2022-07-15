@@ -3,6 +3,7 @@ import { Schema, model, Document } from "mongoose";
 export interface IComment extends Document {
   body: string;
   author: string;
+  articleId: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -10,6 +11,7 @@ export interface IComment extends Document {
 const CommentSchema = new Schema({
   body: { type: String, required: true },
   author: { type: String, required: true },
+  articleId: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

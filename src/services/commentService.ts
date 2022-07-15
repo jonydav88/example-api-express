@@ -9,6 +9,15 @@ export async function getComments() {
   }
 }
 
+export async function getCommentsByArticleId(article: string) {
+  try {
+    return await Comment.find({ articleId: article });
+  } catch (error) {
+    // Log Errors
+    throw Error("Error retrieving Comments");
+  }
+}
+
 export async function getCommentById(id: string) {
   try {
     return await Comment.findOne({ _id: id });
@@ -18,10 +27,10 @@ export async function getCommentById(id: string) {
   }
 }
 
-export async function createComment(Comment: IComment) {
+export async function createComment(comment: IComment) {
   try {
-    await Comment.save();
-    return Comment;
+    await comment.save();
+    return comment;
   } catch (error) {
     // Log Errors
     throw Error("error saving Comment");
@@ -30,7 +39,6 @@ export async function createComment(Comment: IComment) {
 
 export async function updateComment(id: string, comment: IComment) {
   try {
-    comment.updatedAt = new Date();
     await Comment.findOneAndUpdate({ _id: id }, comment);
     return comment;
   } catch (error) {
