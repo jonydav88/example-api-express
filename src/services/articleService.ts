@@ -30,6 +30,7 @@ export async function createArticle(article: IArticle) {
 
 export async function updateArticle(id: string, article: IArticle) {
   try {
+    article.updatedAt = new Date();
     await Article.findOneAndUpdate({ _id: id }, article);
     return article;
   } catch (error) {

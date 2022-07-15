@@ -1,5 +1,6 @@
 import express from "express";
 import articleRoutes from "./routes/articleRoute";
+import commentRoutes from "./routes/commentRoute";
 import mongoose from "mongoose";
 
 class Server {
@@ -32,6 +33,7 @@ class Server {
 
   routes() {
     this.app.use("/api/articles", articleRoutes);
+    this.app.use("/api/comments", commentRoutes);
   }
 
   start() {
